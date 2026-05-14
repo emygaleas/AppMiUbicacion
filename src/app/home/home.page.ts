@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { NgIf } from '@angular/common';
 import { LocationService } from '../services/location';
+import { Supadatabase } from '../services/supadatabase';
+import { FirebaseService } from '../services/firebase';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,7 @@ export class HomePage implements OnInit, OnDestroy {
   watchId: string | null = null;
   errorMsg = signal<string | null>(null);
 
-  constructor(private loc: LocationService) {}
+  constructor(private loc: LocationService, private supa: Supadatabase, private fire: FirebaseService) {}
 
   async ngOnInit() {
     await this.loc.ensurePermissions();
@@ -31,8 +33,12 @@ export class HomePage implements OnInit, OnDestroy {
   async obtenerUbicacionActual() {
     try {
       const pos = await this.loc.getCurrentPosition();
-      this.latitude.set(pos.coords.latitude);
-      this.longitude.set(pos.coords.longitude);
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      this.latitude.set(lat);
+      this.longitude.set(lng);
+      await this.supa.guardarUbicacion(lat,lng);
+      await this.fire.guardarUbicacion(lat,lng);
       this.errorMsg.set(null);
     } catch (e: any) {
       this.errorMsg.set(e?.message ?? 'Error al obtener la ubicación actual');
@@ -56,6 +62,19 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.watchId) {
       await this.loc.clearWatch(this.watchId);
       this.watchId = null;
+    }
+  }
+
+  abrirGoogleMaps(){
+    const lat = this.latitude();
+    const lng = this.longitude();
+
+    if (lat && lng) {
+
+      const url =
+        `https://www.google.com/maps?q=${lat},${lng}`;
+
+      window.open(url, '_blank');
     }
   }
 

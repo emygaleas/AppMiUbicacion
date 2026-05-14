@@ -1,31 +1,89 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Mi Ubicación GPS (Standalone)</ion-title>
+    <ion-title>
+      Mi Ubicación GPS
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card *ngIf="latitude() !== null && longitude() !== null">
-    <ion-card-header>
-      <ion-card-title>Coordenadas actuales</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p><strong>Latitud:</strong> {{ latitude() }}</p>
-      <p><strong>Longitud:</strong> {{ longitude() }}</p>
-    </ion-card-content>
-  </ion-card>
+<ion-content fullscreen="true" class="ion-padding">
 
-  <p *ngIf="errorMsg()">{{ errorMsg() }}</p>
+  <div class="container">
 
-  <ion-button expand="block" (click)="obtenerUbicacionActual()">
-    Obtener ubicación actual
-  </ion-button>
+    <div class="location-card"
+         *ngIf="latitude() !== null && longitude() !== null">
 
-  <ion-button expand="block" (click)="iniciarSeguimiento()" [disabled]="watchId !== null">
-    Iniciar seguimiento
-  </ion-button>
+      <div class="icon">
+        📍
+      </div>
 
-  <ion-button expand="block" color="medium" (click)="detenerSeguimiento()" [disabled]="watchId === null">
-    Detener seguimiento
-  </ion-button>
+      <h2>Ubicación actual</h2>
+
+      <div class="coordinate">
+        <span>Latitud</span>
+        <strong>{{ latitude() }}</strong>
+      </div>
+
+      <div class="coordinate">
+        <span>Longitud</span>
+        <strong>{{ longitude() }}</strong>
+      </div>
+
+    </div>
+
+    <div class="error"
+         *ngIf="errorMsg()">
+
+      {{ errorMsg() }}
+
+    </div>
+
+    <div class="buttons">
+
+      <ion-button
+        expand="block"
+        shape="round"
+        (click)="obtenerUbicacionActual()">
+
+        Obtener ubicación
+
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        shape="round"
+        color="success"
+        (click)="iniciarSeguimiento()"
+        [disabled]="watchId !== null">
+
+        Iniciar seguimiento
+
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        shape="round"
+        color="medium"
+        (click)="detenerSeguimiento()"
+        [disabled]="watchId === null">
+
+        Detener seguimiento
+
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        shape="round"
+        color="dark"
+        (click)="abrirGoogleMaps()"
+        [disabled]="latitude() === null || longitude() === null">
+
+        Abrir Google Maps
+
+      </ion-button>
+
+    </div>
+
+  </div>
+
 </ion-content>
