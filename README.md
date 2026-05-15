@@ -336,11 +336,11 @@ Build → Build APK(s)
 
 | Supabase |
 |---|
-| <img src="./evidencias/supabase.jpg" width="700"> |
+| <img src="./evidencias/supabase.jpg" width="900"> |
 
 | Firebase |
 |---|
-| <img src="./evidencias/firebase.jpg" width="700"> |
+| <img src="./evidencias/firebase.jpg" width="900"> |
 
 ---
 
