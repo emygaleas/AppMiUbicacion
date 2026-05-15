@@ -216,6 +216,37 @@ using (true);
 
 ---
 
+## 📍 Configuración de Permisos Android
+
+Para permitir el acceso a la ubicación del dispositivo, se agregaron permisos de geolocalización en el archivo:
+
+```txt
+android/app/src/main/AndroidManifest.xml
+```
+
+Se añadieron las siguientes líneas:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+```
+
+Estos permisos permiten:
+
+* Obtener ubicación precisa mediante GPS.
+* Obtener ubicación aproximada utilizando red móvil o WiFi.
+
+Posteriormente se sincronizó el proyecto utilizando:
+
+```bash
+npx cap sync android
+```
+
+y se recompiló el APK en Android Studio.
+
+---
+
 # 📍 Funcionalidades Implementadas
 
 ## Obtener ubicación actual
@@ -299,7 +330,17 @@ Build → Build APK(s)
 
 # 📸 Evidencias
 
+| Permisos | Aplicación | Google Maps |
+|---|---|---|
+| <img src="./evidencias/inicio.jpg" width="300"> | <img src="./evidencias/inicio 2.jpeg" width="300"> | <img src="./evidencias/ubicacion.jpeg" width="300">
 
+| Supabase |
+|---|
+| <img src="./evidencias/supabase.jpg" width="700"> |
+
+| Firebase |
+|---|
+| <img src="./evidencias/firebase.jpg" width="700"> |
 
 ---
 
